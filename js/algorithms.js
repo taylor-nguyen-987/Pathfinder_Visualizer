@@ -13,7 +13,7 @@ class dfs { //Depth First Search
         const bottomP = new Point(pos.getX(), pos.getY() + 1); //going down is positive!!!
         const topP = new Point(pos.getX(), pos.getY() - 1); //going up is negative!!!
         const leftP = new Point(pos.getX() - 1, pos.getY());
-        var found = false;
+        let found = false;
 
         if (withinBounds(pos) && grid_vals[pos.getY()][pos.getX()] != "TREE" && grid_vals[pos.getY()][pos.getX()] != "SEARCHED") {
 
@@ -48,10 +48,10 @@ class bfs { //Breadth First Search
     }
 
     computePath(pos) {
-        var found = false;
+        let found = false;
         let last = new Node(null, null); //destination node
 
-        var nodeQueue = [];
+        let nodeQueue = [];
 
         nodeQueue.push(new Node(pos, null));
 
@@ -101,9 +101,7 @@ class astar { //A Star
     computePath(pos) {
         let openSet = new Array();
         let closedSet = new Array();
-        var found = false;
-
-        let end = new Point(13, 7);
+        let found = false;
 
         let start = new Node(pos, null);
         start.sethScore(manhattanDistance(pos, end)); //heuristic distance

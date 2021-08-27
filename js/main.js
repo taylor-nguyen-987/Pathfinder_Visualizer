@@ -10,15 +10,18 @@ var path = new Array();
 var count = 0;
 
 //Buttons
-var d; //dfs
-var b; //bfs
-var a; //astar
-var c; //clear grid
+let d; //dfs
+let b; //bfs
+let a; //astar
+let c; //clear grid
+
+let begin; //starting point
+let end; //ending point
 
 function make2Darray(rows, cols) { 
     //Empty 2D array AKA our grid
     var arr = new Array(rows);
-    for (var i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
         arr[i] = new Array(cols);
     }
     return arr;
@@ -32,7 +35,7 @@ function initialize_grid() {
         }
     }
 
-    grid_vals[7][13] = "NEST"; //nest
+    grid_vals[end.getY()][end.getX()] = "NEST"; //nest
 
     for (let col = 2; col < 9; col++)
         {
@@ -117,6 +120,9 @@ function setup() {
     c=createButton("Clear Grid");
     c.mousePressed(clearing);
 
+    begin = new Point(2, 3);
+    end = new Point(13, 7);
+
     initialize_grid();
     frameRate(20);
 
@@ -125,14 +131,16 @@ function setup() {
 function draw() {
     background(211, 211, 211);
     draw_grid();
-    grid_vals[3][2] = "BIRD"; //bird
+    
+    grid_vals[begin.getY()][begin.getX()] = "BIRD"; //keep animating bird as starting point
+    
     draw_path(this.path);
 
 }
 
 function draw_grid() {
-    for (var i = 0; i < rows; i++) {
-        for (var j = 0; j < cols; j++) {
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
         
             draw_tile(i, j);
             
@@ -177,7 +185,7 @@ function draw_path(path) {
 
         if (count != path.length-1) { //animating the path step by step
 
-            for (var i=0; i<=count; i++) {
+            for (let i=0; i<=count; i++) {
                 fill(255, 215, 0);
                 rect(path[i].getX() * TILE_SIZE + TILE_SIZE * 3 / 8,
                         path[i].getY() * TILE_SIZE + TILE_SIZE * 3 / 8,
@@ -185,7 +193,7 @@ function draw_path(path) {
             }
             count++;
         } else { //the whole path is animated
-            for (var j = 0; j<path.length; j++) {
+            for (let j = 0; j<path.length; j++) {
                 fill(255, 215, 0);
                 rect(path[j].getX() * TILE_SIZE + TILE_SIZE * 3 / 8,
                         path[j].getY() * TILE_SIZE + TILE_SIZE * 3 / 8,
@@ -201,7 +209,6 @@ function depth() {
     initialize_grid();
 
     const searching = new dfs(path);
-    const begin = new Point(2, 3); //x is column, y is row
     searching.computePath(begin);
 
     path = searching.getPath();
@@ -215,7 +222,6 @@ function breadth() {
     initialize_grid();
 
     const searching = new bfs(path);
-    const begin = new Point(2, 3);
     searching.computePath(begin);
 
     path = searching.getPath();
@@ -229,7 +235,6 @@ function Astar() {
     initialize_grid();
 
     const searching = new astar(path);
-    const begin = new Point(2, 3);
     searching.computePath(begin);
 
     path = searching.getPath();
