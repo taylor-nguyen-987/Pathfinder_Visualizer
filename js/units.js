@@ -20,6 +20,7 @@ class Node { //Node class
         this.fScore = Infinity;
         this.gScore = Infinity;
         this.hScore = Infinity;
+        this.dist = Infinity;
     }
 
     getPosition() {
@@ -28,7 +29,15 @@ class Node { //Node class
     getPriorNode() {
         return this.prior;
     }
-
+    setPriorNode(Prior) {
+        this.PriorNode = Prior;
+    }
+    setdist(dist) {
+        this.dist = dist;
+    }
+    getdist() {
+        return this.dist;
+    }
     getgScore() {return this.gScore;}
     gethScore() {
         return this.hScore;

@@ -157,3 +157,49 @@ class astar { //A Star
         return found;
     }
 } 
+
+class dijkstra {
+    constructor(path) {
+        this.path = path;
+    }
+
+    getPath() {
+        return this.path;
+    }
+
+    computePath(pos) {
+        let makeQueue = new Array();
+        let found = false;
+        let start = new Node(pos, null);
+        start.setdist(0);
+        makeQueue.push(start);
+
+        while (makeQueue.length != 0) {
+            let current = makeQueue.shift();
+            
+            if (grid_vals[current.getPosition().getY()][current.getPosition().getX()] == "NEST") {
+                for (const p of reconstruct_path(current)) {
+                    this.path.push(p);
+                }
+                found = true;
+                break;
+            }
+            grid_vals[current.getPosition().getY()][current.getPosition().getX()] = "SEARCHED"; //mark as searched
+
+            for (const neighbor of current.getNeighbors()) {
+
+                if (withinBounds(neighbor.getPosition()) &&
+                        grid_vals[neighbor.getPosition().getY()][neighbor.getPosition().getX()] != "TREE" &&
+                        grid_vals[neighbor.getPosition().getY()][neighbor.getPosition().getX()] != "SEARCHED") { //check neighbors if valid
+                        makeQueue.push(neighbor)
+
+                        if (neighbor.getdist() > current.getdist() + 1) {
+                            neighbor.setdist(current.getdist() + 1);
+                            neighbor.setPriorNode(current);
+                        }
+                    }
+                }
+            }
+        return found;
+        }
+}

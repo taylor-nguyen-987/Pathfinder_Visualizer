@@ -14,6 +14,7 @@ let d; //dfs
 let b; //bfs
 let a; //astar
 let c; //clear grid
+let k;
 
 let begin; //starting point
 let end; //ending point
@@ -116,6 +117,9 @@ function setup() {
 
     a=createButton("A* Search");
     a.mousePressed(Astar);
+
+    k=createButton("Dijkstra's");
+    k.mousePressed(Dijkstra)
 
     c=createButton("Clear Grid");
     c.mousePressed(clearing);
@@ -242,6 +246,18 @@ function Astar() {
     drawPath = true;
 }
 
+function Dijkstra() {
+    count = 0;
+    path = new Array();
+    initialize_grid();
+
+    const searching = new dijkstra(path);
+    searching.computePath(begin);
+
+    path = searching.getPath();
+    
+    drawPath = true;
+}
 function clearing() {
     drawPath = false;
     count = 0;

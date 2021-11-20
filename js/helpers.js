@@ -37,3 +37,8 @@ function inopenSet(openSet, neighbor) {
 function sortbyFscore(s1, s2) {
     return s1.getfScore()-s2.getfScore();
 }
+
+//Dijkstra helper function
+function sortbyDist(s1, s2) {
+    return s1.getdist()-s2.getdist();
+}
